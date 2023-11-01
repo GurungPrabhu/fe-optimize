@@ -54,14 +54,6 @@ workflows:
     jobs:
       - project_two
 
-  build-3:
-    when:
-      or:
-        - << pipeline.parameters.project-three >>
-        - << pipeline.parameters.run-them-all >>
-    jobs:
-      - project_three
-
   build-shared-other:
     when: << pipeline.parameters.run-them-all >>
     jobs:
