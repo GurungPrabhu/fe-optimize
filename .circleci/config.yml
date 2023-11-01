@@ -14,4 +14,3 @@ workflows:
           mapping: |
             package-1/.* project-one true
             package-2/.* project-two true
-            .* run-them-all true
