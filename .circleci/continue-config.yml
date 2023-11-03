@@ -55,6 +55,9 @@ workflows:
       - project_two
 
   build-shared-other:
-    when: << pipeline.parameters.run-them-all >>
+    when:
+      and:
+        - not: << pipeline.parameters.project-one >>
+        - not: << pipeline.parameters.project-two >>
     jobs:
       - all_projects
