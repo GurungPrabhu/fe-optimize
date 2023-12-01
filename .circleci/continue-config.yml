@@ -320,6 +320,8 @@ jobs:
       - slack/notify-on-failure:
           only_for_branches: develop
 
+      resource_class: medium
+
   # project_all_deploy: 
     docker:
       - image: google/cloud-sdk
