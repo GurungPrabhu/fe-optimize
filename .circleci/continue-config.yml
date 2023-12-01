@@ -522,13 +522,13 @@ workflows:
         - << pipeline.parameters.project-two >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_two_build:
+      - project_one_build:
           context: skeleton_dev
           filters:
             branches:
               only:
                 - /SKELETON-.*/
-      - project_two_deploy:
+      - project_one_deploy:
           context: skeleton_dev
           filters:
             branches:
