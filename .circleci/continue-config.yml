@@ -560,18 +560,18 @@ workflows:
         - not: << pipeline.parameters.project-one >>
         - not: << pipeline.parameters.project-two >>
     jobs:
-      - project_all_build:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - /SKELETON-.*/
-      - project_all_deploy:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - develop 
+      - project_all_build
+      #     context: skeleton_dev
+      #     filters:
+      #       branches:
+      #         only:
+      #           - /SKELETON-.*/
+      # - project_all_deploy:
+      #     context: skeleton_dev
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop 
   build-and-deploy-to-prod:
    jobs:
       - build_and_deploy_to_production:
