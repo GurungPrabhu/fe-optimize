@@ -522,66 +522,66 @@ workflows:
   build-1:
     when:
       or:
-        - << pipeline.parameters.project-two >>
+        - << pipeline.parameters.project-one >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_one_build:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - /SKELETON-.*/
-      - project_one_deploy:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - develop 
+      - project_one_build
+      #     context: skeleton_dev
+      #     filters:
+      #       branches:
+      #         only:
+      #           - /SKELETON-.*/
+      # - project_one_deploy:
+      #     context: skeleton_dev
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop 
   build-2:
     when:
       or:
         - << pipeline.parameters.project-two >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_two_build:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - /SKELETON-.*/
-      - project_two_deploy:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - develop 
+      - project_two_build
+      #     context: skeleton_dev
+      #     filters:
+      #       branches:
+      #         only:
+      #           - /SKELETON-.*/
+      # - project_two_deploy:
+      #     context: skeleton_dev
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop 
   build-shared-other:
     when:
       and:
         - not: << pipeline.parameters.project-one >>
         - not: << pipeline.parameters.project-two >>
     jobs:
-      - project_all_deploy:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - /SKELETON-.*/
-      - project_all_build:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - develop 
-  build-and-deploy-to-prod:
-   jobs:
-      - build_and_deploy_to_production:
-          context: skeleton_production
-          filters:
-            tags:
-              only:
-                - /v[0-9].*/
-            branches:
-              ignore:
-                - /.*/ 
+      - project_all_deploy
+      #     context: skeleton_dev
+      #     filters:
+      #       branches:
+      #         only:
+      #           - /SKELETON-.*/
+      # - project_all_build:
+      #     context: skeleton_dev
+      #     filters:
+      #       branches:
+      #         only:
+      #           - develop 
+  # build-and-deploy-to-prod:
+  #  jobs:
+  #     - build_and_deploy_to_production:
+  #         context: skeleton_production
+  #         filters:
+  #           tags:
+  #             only:
+  #               - /v[0-9].*/
+  #           branches:
+  #             ignore:
+  #               - /.*/ 
 
