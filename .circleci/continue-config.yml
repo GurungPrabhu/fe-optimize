@@ -280,8 +280,6 @@ jobs:
     docker:
       - image: circleci/node:14.17.5
 
-    working_directory: ~/skeleton-front
-    
     steps:
       - checkout
       
