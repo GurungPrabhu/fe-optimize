@@ -561,7 +561,7 @@ workflows:
         - not: << pipeline.parameters.project-one >>
         - not: << pipeline.parameters.project-two >>
     jobs:
-      - project_all_deploy
+      - project_two_build
       #     context: skeleton_dev
       #     filters:
       #       branches:
