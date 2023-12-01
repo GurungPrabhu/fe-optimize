@@ -254,17 +254,17 @@ jobs:
             gcloud app deploy app_consumer.yaml --project ${GCLOUD_PROJECT_ID} --quiet
 
       - run:
-        name: Delete Old versions of Consumer Services in App Engine
-        command: |
-          versions=$(gcloud app versions list \
+          name: Delete Old versions of Consumer Services in App Engine
+          command: |
+            versions=$(gcloud app versions list \
             --service consumer \
             --sort-by '~VERSION.ID' \
             --format 'value(VERSION.ID)' | sed 1,5d)
-          for version in $versions; do
+            for version in $versions; do
             gcloud app versions delete "$version" \
               --service consumer \
               --quiet
-          done
+            done
 
       - slack/status:
           channel: ${SLACK_CHANNEL}
@@ -409,17 +409,17 @@ jobs:
             gcloud app deploy app_consumer.yaml --project ${GCLOUD_PROJECT_ID} --quiet
 
       - run:
-        name: Delete Old versions of Consumer Services in App Engine
-        command: |
-          versions=$(gcloud app versions list \
+          name: Delete Old versions of Consumer Services in App Engine
+          command: |
+            versions=$(gcloud app versions list \
             --service consumer \
             --sort-by '~VERSION.ID' \
             --format 'value(VERSION.ID)' | sed 1,5d)
-          for version in $versions; do
+            for version in $versions; do
             gcloud app versions delete "$version" \
               --service consumer \
               --quiet
-          done
+            done
 
       - slack/status:
           channel: ${SLACK_CHANNEL}
@@ -524,7 +524,7 @@ workflows:
         - << pipeline.parameters.project-one >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_one_build
+      - project_one_build:
           context: skeleton_dev
           filters:
             branches:
@@ -542,7 +542,7 @@ workflows:
         - << pipeline.parameters.project-two >>
         - << pipeline.parameters.run-them-all >>
     jobs:
-      - project_two_build
+      - project_two_build:
           context: skeleton_dev
           filters:
             branches:
@@ -560,13 +560,13 @@ workflows:
         - not: << pipeline.parameters.project-one >>
         - not: << pipeline.parameters.project-two >>
     jobs:
-      - project_all_build
+      - project_all_build:
           context: skeleton_dev
           filters:
             branches:
               only:
                 - /SKELETON-.*/
-      - project_all_build:
+      - project_all_deploy:
           context: skeleton_dev
           filters:
             branches:
