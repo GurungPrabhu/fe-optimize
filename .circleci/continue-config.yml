@@ -1,12 +1,5 @@
 version: 2.1
 
-executors:
-  base:
-    docker:
-      - image: circleci/node:14.17.5
-
-    working_directory: ~/skeleton-front
-
 parameters:
   project-one:
     type: boolean
@@ -18,9 +11,16 @@ parameters:
     type: boolean
     default: false
 
+orbs:
+  slack: circleci/slack@3.4.2
+  # for secondary image dependencies to google cloud sdk 
+  node: circleci/node@4.7.0
+
 jobs:
   project_one_build:
-    executor: base
+    docker:
+      - image: circleci/node:14.17.5
+
     steps:
       - checkout
       
@@ -53,7 +53,7 @@ jobs:
       - slack/status:
           channel: ${SLACK_CHANNEL}
           webhook: ${SLACK_WEBHOOK}
-          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
+          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!' 
 
       - slack/notify-on-failure:
           only_for_branches: develop
@@ -147,7 +147,9 @@ jobs:
     resource_class: medium
 
   project_two_build:
-    executor: base
+    docker:
+      - image: google/cloud-sdk
+
     steps:
       - checkout
       
@@ -184,6 +186,7 @@ jobs:
 
       - slack/notify-on-failure:
           only_for_branches: develop
+
     resource_class: medium
 
   project_two_deploy:
