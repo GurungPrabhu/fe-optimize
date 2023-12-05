@@ -50,13 +50,13 @@ jobs:
             unset CI
             yarn build:gae:admin
       
-      - slack/status:
-          channel: ${SLACK_CHANNEL}
-          webhook: ${SLACK_WEBHOOK}
-          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!' 
+      # - slack/status:
+      #     channel: ${SLACK_CHANNEL}
+      #     webhook: ${SLACK_WEBHOOK}
+      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!' 
 
-      - slack/notify-on-failure:
-          only_for_branches: develop
+      # - slack/notify-on-failure:
+      #     only_for_branches: develop
     resource_class: medium
 
   project_one_deploy:
@@ -136,13 +136,13 @@ jobs:
                 --quiet
             done
 
-      - slack/status:
-          channel: ${SLACK_CHANNEL}
-          webhook: ${SLACK_WEBHOOK}
-          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
+      # - slack/status:
+      #     channel: ${SLACK_CHANNEL}
+      #     webhook: ${SLACK_WEBHOOK}
+      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
 
-      - slack/notify-on-failure:
-          only_for_branches: develop
+      # - slack/notify-on-failure:
+      #     only_for_branches: develop
 
     resource_class: medium
 
@@ -179,13 +179,13 @@ jobs:
             unset CI
             yarn build:gae:consumer
       
-      - slack/status:
-          channel: ${SLACK_CHANNEL}
-          webhook: ${SLACK_WEBHOOK}
-          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
+      # - slack/status:
+      #     channel: ${SLACK_CHANNEL}
+      #     webhook: ${SLACK_WEBHOOK}
+      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
 
-      - slack/notify-on-failure:
-          only_for_branches: develop
+      # - slack/notify-on-failure:
+      #     only_for_branches: develop
 
     resource_class: medium
 
@@ -266,13 +266,13 @@ jobs:
               --quiet
             done
 
-      - slack/status:
-          channel: ${SLACK_CHANNEL}
-          webhook: ${SLACK_WEBHOOK}
-          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
+      # - slack/status:
+      #     channel: ${SLACK_CHANNEL}
+      #     webhook: ${SLACK_WEBHOOK}
+      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
 
-      - slack/notify-on-failure:
-          only_for_branches: develop
+      # - slack/notify-on-failure:
+      #     only_for_branches: develop
 
     resource_class: medium
 
@@ -310,13 +310,13 @@ jobs:
             yarn build:gae:admin
             yarn build:gae:consumer
       
-      - slack/status:
-          channel: ${SLACK_CHANNEL}
-          webhook: ${SLACK_WEBHOOK}
-          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
+      # - slack/status:
+      #     channel: ${SLACK_CHANNEL}
+      #     webhook: ${SLACK_WEBHOOK}
+      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
 
-      - slack/notify-on-failure:
-          only_for_branches: develop
+      # - slack/notify-on-failure:
+      #     only_for_branches: develop
     resource_class: medium
 
   project_all_deploy:
@@ -421,13 +421,13 @@ jobs:
               --quiet
             done
 
-      - slack/status:
-          channel: ${SLACK_CHANNEL}
-          webhook: ${SLACK_WEBHOOK}
-          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
+      # - slack/status:
+      #     channel: ${SLACK_CHANNEL}
+      #     webhook: ${SLACK_WEBHOOK}
+      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
 
-      - slack/notify-on-failure:
-          only_for_branches: develop
+      # - slack/notify-on-failure:
+      #     only_for_branches: develop
 
     resource_class: medium
 
@@ -507,13 +507,13 @@ jobs:
           command: |
             gcloud app deploy app_consumer.yaml --project ${GCLOUD_PROJECT_ID} --quiet
 
-      - slack/status:
-          channel: ${SLACK_CHANNEL}
-          webhook: ${SLACK_WEBHOOK}
-          failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
+      # - slack/status:
+      #     channel: ${SLACK_CHANNEL}
+      #     webhook: ${SLACK_WEBHOOK}
+      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
 
-      - slack/notify-on-failure:
-          only_for_branches: develop
+      # - slack/notify-on-failure:
+      #     only_for_branches: develop
 
     resource_class: medium
 
@@ -560,14 +560,14 @@ workflows:
         - not: << pipeline.parameters.project-one >>
         - not: << pipeline.parameters.project-two >>
     jobs:
-      # - project_all_build:
-      #     context: skeleton_dev
-      #     filters:
-      #       branches:
-      #         only:
-      #           - /SKELETON-.*/
+      - project_all_build:
+          context: skeleton_dev
+          filters:
+            branches:
+              only:
+                - /SKELETON-.*/
       - project_all_deploy:
-          # context: skeleton_dev
+          context: skeleton_dev
           filters:
             branches:
               only:
