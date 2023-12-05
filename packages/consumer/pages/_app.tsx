@@ -15,7 +15,6 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   })
 }
-
 const queryClient = new QueryClient({ defaultOptions: {} })
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
