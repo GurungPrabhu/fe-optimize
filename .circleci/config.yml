@@ -9,7 +9,7 @@ workflows:
   setup-workflow:
     jobs:
       - path-filtering/filter:
-          base-revision: main
+          base-revision: develop
           config-path: .circleci/continue-config.yml
           mapping: |
             packages/consumer/.* project-one true
