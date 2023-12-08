@@ -24,12 +24,6 @@ jobs:
     steps:
       - checkout
       
-      - run:
-          name: Print Parameters
-          command: |
-            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE:-false}"
-            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO:-false}"
-            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL:-false}"
 
       - run:
           name: Checking the Node.js version
@@ -83,6 +77,13 @@ jobs:
           install-yarn: true
           lts: true
       
+      - run:
+          name: Print Parameters
+          command: |
+            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE:-false}"
+            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO:-false}"
+            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL:-false}"
+
       - run:
           name: Checking Node.JS version
           command: | 
