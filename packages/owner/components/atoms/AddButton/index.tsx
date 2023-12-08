@@ -6,6 +6,7 @@ interface AddButtonProps {
   icon?: "download" | "add" | "none"
 }
 
+
 const AddButton: React.FC<AddButtonProps> = (props) => {
   const { text, icon } = props
   const { t } = useTranslation()
