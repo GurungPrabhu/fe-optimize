@@ -535,7 +535,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop 
+                - main 
   build-2:
     when:
       or:
@@ -553,7 +553,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop 
+                - main 
   build-shared-other:
     when:
       and:
@@ -571,7 +571,7 @@ workflows:
           filters:
             branches:
               only:
-                - develop 
+                - main 
   build-and-deploy-to-prod:
    jobs:
       - build_and_deploy_to_production:
