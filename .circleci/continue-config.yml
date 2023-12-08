@@ -80,9 +80,9 @@ jobs:
       - run:
           name: Print Parameters
           command: |
-            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE:-false}"
-            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO:-false}"
-            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL:-false}"
+            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE}"
+            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO}"
+            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
 
       - run:
           name: Checking Node.JS version
