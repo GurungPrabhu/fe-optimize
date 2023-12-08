@@ -25,9 +25,21 @@ jobs:
       - checkout
       
       - run:
+          name: Print Parameters
+          command: |
+            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE:-false}"
+            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO:-false}"
+            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL:-false}"
+
+      - run:
           name: Checking the Node.js version
           command: |
             node --version
+      
+      - run:
+          name: Echo Parameters 
+          command: |
+
       
       - restore_cache:
           keys:
