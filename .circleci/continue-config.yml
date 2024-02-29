@@ -557,6 +557,10 @@ workflows:
     jobs:
       - project_two_build:
           context: skeleton_dev
+          filters:
+            branches:
+              only:
+                - /SKELETON-.*/
       - project_two_deploy:
           context: skeleton_dev
           filters:
