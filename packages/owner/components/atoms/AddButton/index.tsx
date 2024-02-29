@@ -23,7 +23,7 @@ const AddButton: React.FC<AddButtonProps> = (props) => {
   return (
     <div
       style={{
-        color: "#65B798",
+        color: "#65B799",
         fontSize: "12px",
         lineHeight: "22px",
       }}
