@@ -22,7 +22,6 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   })
 }
-
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const routers = useRouter()
   const [loading, setLoading] = useState(true)
