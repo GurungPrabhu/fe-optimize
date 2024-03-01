@@ -532,9 +532,7 @@ jobs:
 
 workflows:
   build-1:
-    when:
-      or:
-        - << pipeline.parameters.project-one >>
+    when: << pipeline.parameters.project-one >>
     jobs:
       - project_one_build:
           context: skeleton_dev
@@ -549,9 +547,7 @@ workflows:
               only:
                 - main 
   build-2:
-    when:
-      or:
-        - << pipeline.parameters.project-two >>
+    when: << pipeline.parameters.project-two >>
     jobs:
       - project_two_build:
           context: skeleton_dev
