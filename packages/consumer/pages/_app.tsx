@@ -42,7 +42,6 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
       }
     }
   }, [])
-
   return (
     <>
       <GlobalStyles />
