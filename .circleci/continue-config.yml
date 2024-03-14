@@ -27,9 +27,13 @@ jobs:
       - run:
           name: Echo Parameters 
           command: |
-            echo "project-one: ${project-one}"
-            echo "project-two: ${project-two}"
-            echo "run-them-all: ${run-them-all}"
+            echo "Project One: $PROJECT_ONE"
+            echo "Project Two: $PROJECT_TWO"
+            echo "Run Them All: $RUN_THEM_ALL"
+          environment:
+            PROJECT_ONE: << pipeline.parameters.project-one >>
+            PROJECT_TWO: << pipeline.parameters.project-two >>
+            RUN_THEM_ALL: << pipeline.parameters.run-them-all >>
       
 
   project_one_deploy:
