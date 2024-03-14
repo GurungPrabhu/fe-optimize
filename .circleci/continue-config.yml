@@ -293,8 +293,11 @@ workflows:
             branches:
               only:
                 - /SKELETON-.*/
+                - main
       - project_one_deploy:
           context: skeleton_dev
+          requires:
+            - project_one_build
           filters:
             branches:
               only:
@@ -308,8 +311,11 @@ workflows:
             branches:
               only:
                 - /SKELETON-.*/
+                - main
       - project_two_deploy:
           context: skeleton_dev
+          requires:
+            - project_two_build
           filters:
             branches:
               only:
@@ -326,14 +332,19 @@ workflows:
             branches:
               only:
                 - /SKELETON-.*/
+                - main
       - project_two_build:
           context: skeleton_dev
           filters:
             branches:
               only:
                 - /SKELETON-.*/
+                - main
       - project_all_deploy:
           context: skeleton_dev
+          requires:
+            - project_one_build
+            - project_two_build
           filters:
             branches:
               only:
