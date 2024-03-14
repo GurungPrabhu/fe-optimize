@@ -24,46 +24,13 @@ jobs:
     steps:
       - checkout
       
-
-      - run:
-          name: Checking the Node.js version
-          command: |
-            node --version
-      
       - run:
           name: Echo Parameters 
           command: |
-
+            echo "project-one: ${PROJECT_ONE}"
+            echo "project-two: ${PROJECT_TWO}"
+            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
       
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn bootstrap
-
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-              - ./node_modules
-      
-      - run:
-          name: Build the admin package
-          command: |
-            unset CI
-            yarn build:gae:admin
-      
-      # - slack/status:
-      #     channel: ${SLACK_CHANNEL}
-      #     webhook: ${SLACK_WEBHOOK}
-      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!' 
-
-      # - slack/notify-on-failure:
-      #     only_for_branches: develop
-    resource_class: medium
 
   project_one_deploy:
     docker:
@@ -73,89 +40,12 @@ jobs:
     steps:
       - checkout
 
-      - node/install:
-          install-yarn: true
-          lts: true
-      
       - run:
           name: Print Parameters
           command: |
             echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE}"
             echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO}"
             echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
-
-      - run:
-          name: Checking Node.JS version
-          command: | 
-            node --version
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-      
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn bootstrap
-
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-              - ./node_modules 
-      
-      - run:
-          name: Initializing the Environment variables
-          command: |
-            echo "NEXT_PUBLIC_FIREBASE_API_KEY=$NEXT_PUBLIC_FIREBASE_API_KEY
-            NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=$NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-            NEXT_PUBLIC_FIREBASE_PROJECT_ID=$NEXT_PUBLIC_FIREBASE_PROJECT_ID
-            NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=$NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-            NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID=$NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID
-            NEXT_PUBLIC_FIREBASE_APP_ID=$NEXT_PUBLIC_FIREBASE_APP_ID
-            NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=$NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-            NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
-            NEXT_PUBLIC_GOOGLE_API_KEY=$NEXT_PUBLIC_GOOGLE_API_KEY
-            NEXT_PUBLIC_APP_API_URL=$NEXT_PUBLIC_APP_API_URL" > .env
-
-      - run:
-          name: Authenticating and configuring the Google Cloud Platform
-          command: |
-            echo $GCLOUD_SERVICE_KEY | base64 --decode | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
-
-      - run: 
-          name: Build Admin
-          command: |
-            unset CI
-            yarn build:gae:admin
-      
-      - run:
-          name: Deploy Admin
-          command: |
-            gcloud app deploy app_admin.yaml --project ${GCLOUD_PROJECT_ID} --quiet
-
-      - run:
-          name: Delete Old versions of Admin Services in App Engine
-          command: |
-            versions=$(gcloud app versions list \
-              --service admin \
-              --sort-by '~VERSION.ID' \
-              --format 'value(VERSION.ID)' | sed 1,5d)
-            for version in $versions; do
-              gcloud app versions delete "$version" \
-                --service admin \
-                --quiet
-            done
-
-      # - slack/status:
-      #     channel: ${SLACK_CHANNEL}
-      #     webhook: ${SLACK_WEBHOOK}
-      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
-
-      # - slack/notify-on-failure:
-      #     only_for_branches: develop
 
     resource_class: medium
 
@@ -167,38 +57,11 @@ jobs:
       - checkout
       
       - run:
-          name: Checking the Node.js version
+          name: Print Parameters
           command: |
-            node --version
-      
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn bootstrap
-
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-              - ./node_modules
-      
-      - run:
-          name: Build the consumer package
-          command: |
-            unset CI
-            yarn build:gae:consumer
-      
-      # - slack/status:
-      #     channel: ${SLACK_CHANNEL}
-      #     webhook: ${SLACK_WEBHOOK}
-      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
-
-      # - slack/notify-on-failure:
-      #     only_for_branches: develop
+            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE}"
+            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO}"
+            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
 
     resource_class: medium
 
@@ -210,126 +73,13 @@ jobs:
     steps:
       - checkout
 
-      - node/install:
-          install-yarn: true
-          lts: true
+      - run:
+          name: Print Parameters
+          command: |
+            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE}"
+            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO}"
+            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
       
-      - run:
-          name: Checking Node.JS version
-          command: | 
-            node --version
-
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-      
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn bootstrap
-
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-              - ./node_modules 
-      
-      - run:
-          name: Initializing the Environment variables
-          command: |
-            echo "NEXT_PUBLIC_FIREBASE_API_KEY=$NEXT_PUBLIC_FIREBASE_API_KEY
-            NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=$NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
-            NEXT_PUBLIC_FIREBASE_PROJECT_ID=$NEXT_PUBLIC_FIREBASE_PROJECT_ID
-            NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=$NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
-            NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID=$NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID
-            NEXT_PUBLIC_FIREBASE_APP_ID=$NEXT_PUBLIC_FIREBASE_APP_ID
-            NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID=$NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
-            NEXT_PUBLIC_GOOGLE_CLIENT_ID=$NEXT_PUBLIC_GOOGLE_CLIENT_ID
-            NEXT_PUBLIC_GOOGLE_API_KEY=$NEXT_PUBLIC_GOOGLE_API_KEY
-            NEXT_PUBLIC_APP_API_URL=$NEXT_PUBLIC_APP_API_URL" > .env
-
-      - run:
-          name: Authenticating and configuring the Google Cloud Platform
-          command: |
-            echo $GCLOUD_SERVICE_KEY | base64 --decode | gcloud auth activate-service-account --key-file=-
-            gcloud --quiet config set project ${GCLOUD_PROJECT_ID}
-            gcloud --quiet config set compute/zone ${GCLOUD_ZONE}
-
-      - run: 
-          name: Build Consumer
-          command: |
-            unset CI
-            yarn build:gae:consumer
-      
-      - run:
-          name: Deploy Consumer
-          command: |
-            gcloud app deploy app_consumer.yaml --project ${GCLOUD_PROJECT_ID} --quiet
-
-      - run:
-          name: Delete Old versions of Consumer Services in App Engine
-          command: |
-            versions=$(gcloud app versions list \
-            --service consumer \
-            --sort-by '~VERSION.ID' \
-            --format 'value(VERSION.ID)' | sed 1,5d)
-            for version in $versions; do
-            gcloud app versions delete "$version" \
-              --service consumer \
-              --quiet
-            done
-
-      # - slack/status:
-      #     channel: ${SLACK_CHANNEL}
-      #     webhook: ${SLACK_WEBHOOK}
-      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
-
-      # - slack/notify-on-failure:
-      #     only_for_branches: develop
-
-    resource_class: medium
-
-  project_all_build:
-    docker:
-      - image: circleci/node:14.17.5
-
-    steps:
-      - checkout
-      
-      - run:
-          name: Checking the Node.js version
-          command: |
-            node --version
-      
-      - restore_cache:
-          keys:
-            - v1-dependencies-{{ checksum "yarn.lock" }}
-            - v1-dependencies-
-
-      - run:
-          name: Initializing dependencies
-          command: |
-            yarn bootstrap
-
-      - save_cache:
-          key: v1-npm-deps-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-      
-      - run:
-          name: Build the admin package
-          command: |
-            unset CI
-            yarn build:gae:admin
-            yarn build:gae:consumer
-      
-      # - slack/status:
-      #     channel: ${SLACK_CHANNEL}
-      #     webhook: ${SLACK_WEBHOOK}
-      #     failure_message: ':red_circle: A $CIRCLE_JOB job has failed!'
-
-      # - slack/notify-on-failure:
-      #     only_for_branches: develop
     resource_class: medium
 
   project_all_deploy:
@@ -567,12 +317,6 @@ workflows:
         - not: << pipeline.parameters.project-one >>
         - not: << pipeline.parameters.project-two >>
     jobs:
-      - project_all_build:
-          context: skeleton_dev
-          filters:
-            branches:
-              only:
-                - /SKELETON-.*/
       - project_all_deploy:
           context: skeleton_dev
           filters:
