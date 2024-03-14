@@ -59,13 +59,17 @@ jobs:
 
     steps:
       - checkout
-      
+
       - run:
-          name: Print Parameters
+          name: Echo Parameters 
           command: |
-            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE}"
-            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO}"
-            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
+            echo "Project One: $PROJECT_ONE"
+            echo "Project Two: $PROJECT_TWO"
+            echo "Run Them All: $RUN_THEM_ALL"
+          environment:
+            PROJECT_ONE: << pipeline.parameters.project-one >>
+            PROJECT_TWO: << pipeline.parameters.project-two >>
+            RUN_THEM_ALL: << pipeline.parameters.run-them-all >>
 
     resource_class: medium
 
