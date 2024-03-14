@@ -8,6 +8,7 @@ import { GlobalStyles } from "../utils"
 import "../utils/css-imports"
 import { setCurrentScreen, logEvent } from "firebase/analytics"
 
+
 if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
   Sentry.init({
     enabled: process.env.NODE_ENV !== "development",
