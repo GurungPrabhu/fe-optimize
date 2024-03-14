@@ -15,7 +15,6 @@ ConsumerError.getInitialProps = async ({ res, err, asPath }) => {
     res,
     err,
   })
-
   // @ts-ignore
   errorInitialProps.hasGetInitialPropsRun = true
 
