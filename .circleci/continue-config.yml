@@ -27,9 +27,9 @@ jobs:
       - run:
           name: Echo Parameters 
           command: |
-            echo "project-one: ${PROJECT_ONE}"
-            echo "project-two: ${PROJECT_TWO}"
-            echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
+            echo "project-one: ${project-one}"
+            echo "project-two: ${project-two}"
+            echo "run-them-all: ${run-them-all}"
       
 
   project_one_deploy:
