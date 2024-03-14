@@ -7,9 +7,6 @@ parameters:
   project-two:
     type: boolean
     default: false
-  run-them-all:
-    type: boolean
-    default: false
 
 orbs:
   slack: circleci/slack@3.4.2
@@ -33,7 +30,6 @@ jobs:
           environment:
             PROJECT_ONE: << pipeline.parameters.project-one >>
             PROJECT_TWO: << pipeline.parameters.project-two >>
-            RUN_THEM_ALL: << pipeline.parameters.run-them-all >>
       
 
   project_one_deploy:
@@ -69,7 +65,6 @@ jobs:
           environment:
             PROJECT_ONE: << pipeline.parameters.project-one >>
             PROJECT_TWO: << pipeline.parameters.project-two >>
-            RUN_THEM_ALL: << pipeline.parameters.run-them-all >>
 
     resource_class: medium
 
@@ -325,6 +320,18 @@ workflows:
         - not: << pipeline.parameters.project-one >>
         - not: << pipeline.parameters.project-two >>
     jobs:
+      - project_one_build:
+          context: skeleton_dev
+          filters:
+            branches:
+              only:
+                - /SKELETON-.*/
+      - project_two_build:
+          context: skeleton_dev
+          filters:
+            branches:
+              only:
+                - /SKELETON-.*/
       - project_all_deploy:
           context: skeleton_dev
           filters:
