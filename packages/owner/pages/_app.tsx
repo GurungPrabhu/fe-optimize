@@ -12,9 +12,7 @@ import { QueryClient, QueryClientProvider } from "react-query"
 import { GlobalStyles, AuthProvider } from "../utils"
 import "../utils/css-imports"
 import { logEvent, setCurrentScreen } from "firebase/analytics"
-
 const queryClient = new QueryClient({ defaultOptions: {} })
-
 if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
   Sentry.init({
     enabled: process.env.NODE_ENV !== "development",
@@ -22,6 +20,8 @@ if (process.env.NEXT_PUBLIC_SENTRY_DSN) {
     dsn: process.env.NEXT_PUBLIC_SENTRY_DSN,
   })
 }
+
+
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   const routers = useRouter()
