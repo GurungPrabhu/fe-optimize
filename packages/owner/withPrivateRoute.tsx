@@ -14,7 +14,6 @@ const LoaderWrapper = styled.div`
 const PrivateRoute = (AuthComponent) => {
   function PrivateComponent({ children }) {
     const { authenticated, loading, user } = useContext(AuthContext)
-
     useEffect(() => {
       const { pathname } = Router
       if (!loading) {
