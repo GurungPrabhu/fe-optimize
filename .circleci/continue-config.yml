@@ -284,7 +284,7 @@ jobs:
     resource_class: medium
 
 workflows:
-  build-or-deploy-consumer:
+  consumer-workflow:
     when: << pipeline.parameters.consumer >>
     jobs:
       - consumer_build:
@@ -302,7 +302,7 @@ workflows:
             branches:
               only:
                 - develop 
-  build-or-deploy-admin:
+  admin-workflow:
     when: << pipeline.parameters.admin >>
     jobs:
       - admin_build:
@@ -320,7 +320,7 @@ workflows:
             branches:
               only:
                 - develop 
-  build-shared-other:
+  all-package-workflow:
     when:
       and:
         - not: << pipeline.parameters.consumer >>
