@@ -12,5 +12,5 @@ workflows:
           base-revision: main
           config-path: .circleci/continue-config.yml
           mapping: |
-            packages/consumer/.* project-one true
-            packages/owner/.* project-two true
+            packages/consumer/.* consumer true
+            packages/owner/.* admin true

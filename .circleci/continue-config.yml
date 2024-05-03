@@ -1,10 +1,10 @@
 version: 2.1
 
 parameters:
-  project-one:
+  consumer:
     type: boolean
     default: false
-  project-two:
+  admin:
     type: boolean
     default: false
 
@@ -14,7 +14,7 @@ orbs:
   node: circleci/node@4.7.0
 
 jobs:
-  project_one_build:
+  consumer_build:
     docker:
       - image: circleci/node:14.17.5
 
@@ -24,15 +24,15 @@ jobs:
       - run:
           name: Echo Parameters 
           command: |
-            echo "Project One: $PROJECT_ONE"
-            echo "Project Two: $PROJECT_TWO"
+            echo "Project One: $consumer"
+            echo "Project Two: $admin"
             echo "Run Them All: $RUN_THEM_ALL"
           environment:
-            PROJECT_ONE: << pipeline.parameters.project-one >>
-            PROJECT_TWO: << pipeline.parameters.project-two >>
+            consumer: << pipeline.parameters.consumer >>
+            admin: << pipeline.parameters.admin >>
       
 
-  project_one_deploy:
+  consumer_deploy:
     docker:
       - image: google/cloud-sdk
 
@@ -43,13 +43,13 @@ jobs:
       - run:
           name: Print Parameters
           command: |
-            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE}"
-            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO}"
+            echo "consumer: ${CIRCLE_PARAMETER_consumer}"
+            echo "project-two: ${CIRCLE_PARAMETER_admin}"
             echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
 
     resource_class: medium
 
-  project_two_build:
+  admin_build:
     docker:
       - image: google/cloud-sdk
 
@@ -59,16 +59,16 @@ jobs:
       - run:
           name: Echo Parameters 
           command: |
-            echo "Project One: $PROJECT_ONE"
-            echo "Project Two: $PROJECT_TWO"
+            echo "Project One: $consumer"
+            echo "Project Two: $admin"
             echo "Run Them All: $RUN_THEM_ALL"
           environment:
-            PROJECT_ONE: << pipeline.parameters.project-one >>
-            PROJECT_TWO: << pipeline.parameters.project-two >>
+            consumer: << pipeline.parameters.consumer >>
+            admin: << pipeline.parameters.admin >>
 
     resource_class: medium
 
-  project_two_deploy:
+  admin_deploy:
     docker:
       - image: google/cloud-sdk
 
@@ -79,8 +79,8 @@ jobs:
       - run:
           name: Print Parameters
           command: |
-            echo "project-one: ${CIRCLE_PARAMETER_PROJECT_ONE}"
-            echo "project-two: ${CIRCLE_PARAMETER_PROJECT_TWO}"
+            echo "consumer: ${CIRCLE_PARAMETER_consumer}"
+            echo "project-two: ${CIRCLE_PARAMETER_admin}"
             echo "run-them-all: ${CIRCLE_PARAMETER_RUN_THEM_ALL}"
       
     resource_class: medium
@@ -285,37 +285,37 @@ jobs:
 
 workflows:
   build-1:
-    when: << pipeline.parameters.project-one >>
+    when: << pipeline.parameters.consumer >>
     jobs:
-      - project_one_build:
+      - consumer_build:
           context: skeleton_dev
           filters:
             branches:
               only:
                 - /SKELETON-.*/
                 - main
-      - project_one_deploy:
+      - consumer_deploy:
           context: skeleton_dev
           requires:
-            - project_one_build
+            - consumer_build
           filters:
             branches:
               only:
                 - main 
   build-2:
-    when: << pipeline.parameters.project-two >>
+    when: << pipeline.parameters.admin >>
     jobs:
-      - project_two_build:
+      - admin_build:
           context: skeleton_dev
           filters:
             branches:
               only:
                 - /SKELETON-.*/
                 - main
-      - project_two_deploy:
+      - admin_deploy:
           context: skeleton_dev
           requires:
-            - project_two_build
+            - admin_build
           filters:
             branches:
               only:
@@ -323,17 +323,17 @@ workflows:
   build-shared-other:
     when:
       and:
-        - not: << pipeline.parameters.project-one >>
-        - not: << pipeline.parameters.project-two >>
+        - not: << pipeline.parameters.consumer >>
+        - not: << pipeline.parameters.admin >>
     jobs:
-      - project_one_build:
+      - consumer_build:
           context: skeleton_dev
           filters:
             branches:
               only:
                 - /SKELETON-.*/
                 - main
-      - project_two_build:
+      - admin_build:
           context: skeleton_dev
           filters:
             branches:
@@ -343,8 +343,8 @@ workflows:
       - project_all_deploy:
           context: skeleton_dev
           requires:
-            - project_one_build
-            - project_two_build
+            - consumer_build
+            - admin_build
           filters:
             branches:
               only:
