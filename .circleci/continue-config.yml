@@ -284,7 +284,7 @@ jobs:
     resource_class: medium
 
 workflows:
-  build-1:
+  build-or-deploy-consumer:
     when: << pipeline.parameters.consumer >>
     jobs:
       - consumer_build:
@@ -293,7 +293,7 @@ workflows:
             branches:
               only:
                 - /SKELETON-.*/
-                - main
+                - develop
       - consumer_deploy:
           context: skeleton_dev
           requires:
@@ -301,8 +301,8 @@ workflows:
           filters:
             branches:
               only:
-                - main 
-  build-2:
+                - develop 
+  build-or-deploy-admin:
     when: << pipeline.parameters.admin >>
     jobs:
       - admin_build:
@@ -311,7 +311,7 @@ workflows:
             branches:
               only:
                 - /SKELETON-.*/
-                - main
+                - develop
       - admin_deploy:
           context: skeleton_dev
           requires:
@@ -319,7 +319,7 @@ workflows:
           filters:
             branches:
               only:
-                - main 
+                - develop 
   build-shared-other:
     when:
       and:
@@ -332,14 +332,14 @@ workflows:
             branches:
               only:
                 - /SKELETON-.*/
-                - main
+                - develop
       - admin_build:
           context: skeleton_dev
           filters:
             branches:
               only:
                 - /SKELETON-.*/
-                - main
+                - develop
       - project_all_deploy:
           context: skeleton_dev
           requires:
@@ -348,7 +348,7 @@ workflows:
           filters:
             branches:
               only:
-                - main 
+                - develop 
   build-and-deploy-to-prod:
    jobs:
       - build_and_deploy_to_production:
