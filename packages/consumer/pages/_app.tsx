@@ -46,6 +46,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <GlobalStyles />
+
       <QueryClientProvider client={queryClient}>
         <Component {...pageProps} />
         {process.env.NEXT_PUBLIC_ENVIRONMENT === "development" ? (
