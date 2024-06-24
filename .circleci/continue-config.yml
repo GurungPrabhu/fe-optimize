@@ -534,11 +534,18 @@ workflows:
               only:
                 - /SKELETON-.*/
                 - develop
-      - project_all_deploy:
+      - admin_deploy:
+          context: skeleton_dev
+          requires:
+            - admin_build
+          filters:
+            branches:
+              only:
+                - develop 
+      - consumer_deploy:
           context: skeleton_dev
           requires:
             - consumer_build
-            - admin_build
           filters:
             branches:
               only:
